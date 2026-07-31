@@ -104,8 +104,10 @@
  - jump
  - throw
  - damage
+
  以上のモーションを依頼<br>
  そのほかについてはUnity Asset Storeの無料Assetから
+
  ### Assets
  使用したアセット
  - Simple 2D Platformer Assets Pack
