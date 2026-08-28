@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("移動")]
     [SerializeField] private float moveSpeed = 6f;
+    [SerializeField] private float dashSpeed = 12f;
+    private bool isDashing = false;
     [SerializeField] private float groundAcceleration = 40f;
     [SerializeField] private float airAcceleration = 20f;
 
@@ -57,27 +59,37 @@ public class PlayerController : MonoBehaviour
     }
 
     // Player InputのMoveアクションから呼ばれる
-    public void OnMove(InputValue value)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        Vector2 input = value.Get<Vector2>();
-
-        // 左右方向だけを使用
-        moveInput = input.x;
+    Vector2 input = context.ReadValue<Vector2>();
+    moveInput = input.x;
     }
 
     // Player InputのJumpアクションから呼ばれる
-    public void OnJump(InputValue value)
+    public void OnJump(InputAction.CallbackContext context)
     {
-        if (value.isPressed)
-        {
-            jumpRequested = true;
-        }
+      if (context.performed)
+      {
+          jumpRequested = true;
+      }
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+    bool pressed = context.ReadValueAsButton();
+
+    Debug.Log("押されている？ " + pressed);
+
+    isDashing = pressed;
     }
 
     private void Move()
     {
+        // ダッシュ中なら dashSpeed、それ以外なら moveSpeed
+        float currentSpeed = isDashing ? dashSpeed : moveSpeed;
+
         // 目標の横方向速度
-        float targetSpeed = moveInput * moveSpeed;
+        float targetSpeed = moveInput * currentSpeed;
 
         // 地上と空中で加速度を変える
         float acceleration;
