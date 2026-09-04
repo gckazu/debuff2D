@@ -14,7 +14,7 @@ public class ScreenManager : MonoBehaviour
         Config,
         Result,
         ResultList,
-        StageSelect,
+        FloorSelect,
     }
 
     private void Awake()

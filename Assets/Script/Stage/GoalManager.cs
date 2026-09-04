@@ -1,9 +1,11 @@
 using UnityEngine;
-using System;
+using UnityEngine.Events;
 
 public class GoalManager : MonoBehaviour
 {
-    [SerializeField] private GameObject clearTextUI;
+    [Header("イベント")]
+    [InspectorName("ゴール時")]
+    [SerializeField] private UnityEvent onGoal;
 
     private void OnEnable()
     {
@@ -17,19 +19,9 @@ public class GoalManager : MonoBehaviour
 
     private void HandleGoal()
     {
-        // ステージクリアUI表示
-        clearTextUI.SetActive(true);
-
-        // タイマー停止
-        
-
-        // スコア計算
-        
-
-
-        // リザルト保存
-
-        // シーン遷移
+        // Inspector から設定できるイベントを発火
+        onGoal?.Invoke();
+        //リザルト画面に移行
         ScreenManager.Instance.ChangeScene(ScreenManager.SceneType.Result);
     }
 }
